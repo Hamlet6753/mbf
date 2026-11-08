@@ -1103,6 +1103,48 @@ export type Database = {
         Args: { p_band_id: number; p_musician_id: number }
         Returns: undefined
       }
+      save_my_musician_profile: {
+        Args: {
+          p_genres: number[]
+          p_instruments: number[]
+          p_profile: Json
+          p_publish?: boolean
+          p_roles: number[]
+          p_subgenres: number[]
+          p_variants: number[]
+        }
+        Returns: {
+          available: boolean | null
+          background_picture: string | null
+          bio: string | null
+          birthdate: string | null
+          created_at: string
+          custom_genre: string | null
+          email: string | null
+          experience: string | null
+          firstname: string | null
+          gender: Database["public"]["Enums"]["gender_enum"] | null
+          has_musical_education: boolean
+          id: number
+          in_search: boolean | null
+          is_onboarded: boolean | null
+          is_published: boolean
+          lastname: string | null
+          musical_education_details: string | null
+          picture: string | null
+          place_id: number | null
+          updated_at: string
+          user_id: string | null
+          username: string | null
+          website: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "musicians"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       search_bands: {
         Args: {
           p_after_id?: number

@@ -1,4 +1,6 @@
-﻿# MBF interface preview
+> Historical interface milestone. Email auth, profiles and the musician directory now use live dev Supabase. See ../../docs/AUTH_PROFILE.md for the current implementation and verification.
+
+# MBF interface preview
 
 Implemented from the user-supplied Figma CSS export and eight reference screenshots.
 

@@ -33,7 +33,7 @@ NEXT_PUBLIC variables are frozen into each build. Dev and prod artifacts must be
 
 `validateEnvironment` refuses swapped project refs/URLs, partial configuration and public server-secret variables. An opaque publishable key cannot be matched to its project offline; configured values were retrieved from each project's own API. No service-role key is placed in the browser configuration.
 
-The application still renders the clearly labeled design fixtures. Configuring a backend does not yet implement live Supabase queries or authentication. A production build is a verification artifact; no website was deployed.
+Email authentication, the own musician profile, avatars, publication and the musician directory now use dev Supabase. Band sections remain labeled examples. See AUTH_PROFILE.md. The new onboarding RPC migration is applied only to dev; production release requires its reviewed migration. A production build is a verification artifact; no website was deployed.
 
 ## Supabase development
 

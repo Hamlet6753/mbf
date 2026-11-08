@@ -1,3 +1,4 @@
+import { AuthNavigation } from "@/components/auth-navigation";
 import Link from "next/link";
 import Image from "next/image";
 import type { Musician } from "@/lib/demo-data";
@@ -26,9 +27,7 @@ export function Header() {
         <Link href="/#roles">Open Roles</Link>
         <Link href="/#how-it-works">How It Works</Link>
       </nav>
-      <Link className="button primary header-cta" href="/musicians">
-        Explore Musicians
-      </Link>
+      <AuthNavigation />
     </header>
   );
 }

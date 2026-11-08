@@ -21,7 +21,9 @@
     "db:plan:dev": "node scripts/supabase-dev.mjs plan",
     "db:migrate:dev": "node scripts/supabase-dev.mjs migrate",
     "db:test:dev": "node scripts/supabase-dev.mjs test",
-    "db:types:dev": "node scripts/supabase-dev.mjs types"
+    "db:types:dev": "node scripts/supabase-dev.mjs types",
+    "test:onboarding": "node --test tests/onboarding.test.mjs",
+    "db:test:onboarding:dev": "node scripts/supabase-dev.mjs onboarding"
   },
   "overrides": {
     "@typescript-eslint/typescript-estree": {

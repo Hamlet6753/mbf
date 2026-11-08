@@ -1,4 +1,5 @@
-﻿import type { Metadata } from "next";
+import { AuthProvider } from "@/components/auth-provider";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Header, Footer } from "@/components/site";
 import "./globals.css";
@@ -27,9 +28,11 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
-        <Header />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <Header />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

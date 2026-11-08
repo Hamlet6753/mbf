@@ -4,11 +4,12 @@ INSERT INTO auth.users (id,email) VALUES ('7302827e-2125-480b-8077-4eb6e4376531'
 DO $$ BEGIN
  IF NOT EXISTS (SELECT 1 FROM public.musicians WHERE user_id='7302827e-2125-480b-8077-4eb6e4376531' AND NOT is_published AND NOT is_onboarded) THEN RAISE EXCEPTION 'Signup profile defaults failed'; END IF;
 END $$;
+SELECT set_config('mbf.test.profile_id',(SELECT id::text FROM public.musicians WHERE user_id='7302827e-2125-480b-8077-4eb6e4376531'),true);
 SET LOCAL ROLE anon;
 DO $$ BEGIN
- IF EXISTS (SELECT 1 FROM public.public_musicians) THEN RAISE EXCEPTION 'Private profile leaked'; END IF;
+ IF EXISTS (SELECT 1 FROM public.public_musicians WHERE id=current_setting('mbf.test.profile_id')::bigint) THEN RAISE EXCEPTION 'Private profile leaked'; END IF;
  IF (SELECT count(*) FROM public.genres) <> 37 THEN RAISE EXCEPTION 'Lookup read failed'; END IF;
- IF EXISTS (SELECT 1 FROM public.search_musicians()) THEN RAISE EXCEPTION 'Unpublished profile appears in search'; END IF;
+ IF EXISTS (SELECT 1 FROM public.search_musicians() WHERE id=current_setting('mbf.test.profile_id')::bigint) THEN RAISE EXCEPTION 'Unpublished profile appears in search'; END IF;
 END $$;
 RESET ROLE;
 SELECT set_config('request.jwt.claim.sub','7302827e-2125-480b-8077-4eb6e4376531',true);

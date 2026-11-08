@@ -1,4 +1,4 @@
-﻿name: Validate MBF
+name: Validate MBF
 on:
   push:
     branches: [develop, main]
@@ -16,6 +16,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run test:env
+      - run: npm run test:onboarding
       - run: npm run lint
       - run: npm run build:dev
 # Validation only. This workflow never deploys or migrates a Supabase project.

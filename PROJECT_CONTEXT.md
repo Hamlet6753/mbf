@@ -587,3 +587,29 @@ This section supersedes the historical installation blocker in section 5.
 - This supersedes the pending-approval gate in section 16 and docs/ENVIRONMENTS.md. Production deployment still requires a reviewed future migration plan.
 - Rechecked both hosted Supabase projects: mbf-dev gawblqkuodzuerzirsyr and existing prod cjzrnyvyhhkqircmehbi are ACTIVE_HEALTHY. They are separate projects, not Supabase Branching environments. No switch to local Docker dev was made.
 - Git is still local develop with uncommitted changes. User asked whether to publish to GitHub, not explicitly to push; no commit/push performed in this turn.
+
+## 18. Local email auth and musician journey - 2026-11-08
+
+- User requested all five steps: typed dev Supabase connection; signup/confirmation/login/logout/recovery; onboarding; avatar/publication; real public directory/profile. User explicitly chose to continue locally, with no hosting deployment.
+- Added pinned @supabase/supabase-js 2.119.0, a browser PKCE client and AuthProvider. UI authorization is backed by existing RLS; no SSR cookies/proxy or service-role client was introduced.
+- Added /signup, /login, /forgot-password, /auth/callback, /auth/reset-password and /account, header account actions, friendly auth failures and same-browser PKCE guidance. Recovery redirects are strictly allowlisted; callback codes are not echoed in errors.
+- Added atomic SECURITY INVOKER save_my_musician_profile wrapper via dev-only migration 20261108190000_profile_onboarding.sql. It calls the existing array-based update_musician_profile, validates publication and preserves the mixed ID contract. Generated dev types refreshed. PROD DOES NOT HAVE THIS NEW RPC YET. Do not deploy the feature to prod without its reviewed migration.
+- /account edits basic fields and dictionary relations; saves privately, publishes or unpublishes. Avatar upload uses own UUID path, unique name, allowed image types and 5 MiB validation. No images/accounts were deleted. Existing image bucket public visibility is explained in UI.
+- Replaced primary demo directory and featured cards with live search_musicians/public views and public relation views. Added /musicians/[id], cursor Load More and real empty/loading/error states. /musicians/demo remains an explicitly separate example route. Band examples remain labeled mock content.
+- Dev Auth callback allowlist extended with exact password-reset callback queries for localhost and 127.0.0.1. No production settings changed.
+- User supplied a test email in chat, then reported successful registration/confirmation, profile filling, avatar and saving. Independent read-only verification found dev profile numeric ID 5, confirmed email, onboarded=true, is_published=false, 2 genres, 1 instrument, 2 roles and one avatar object. Guest public view/search returned zero records, correctly hiding the private profile. Do not republish the user's profile automatically.
+- Asked user to manually test Save & Publish, directory visibility, logout/login and recovery email. Result pending. Never ask for passwords or email token links.
+- Passed so far: 5 onboarding unit tests, 8 env tests, lint, dev production build, SQL onboarding regression with fixture rollback, npm audit (0 vulnerabilities), local HTTP 200 for all seven auth/account/directory routes checked.
+- Auto-review rejected a proposed persistent service-role integration fixture setup because creating synthetic accounts and retaining credentials lacked explicit approval. The entire command was not executed, and no script/credentials/fixture accounts were written. No workaround was attempted. Used rollback SQL and user-driven browser tests instead.
+- New docs: docs/AUTH_PROFILE.md. Initial historical verify-environments.mjs assumes empty identical schemas and is no longer the appropriate regression runner after forward migrations/user accounts.
+- Changes remain local on dev; no commit/push or hosting deployment performed by the agent.
+
+## 19. User verified journey and recovery redirect - 2026-11-08
+
+- User reported successful Save & Publish/directory/logout/login/password recovery, with one UX issue: after the new password was saved they remained on the password form.
+- Implemented router.replace('/account?password=updated') after successful password update. Account displays 'Password updated successfully.' The account route now wraps its search-param reader in Suspense. Lint and build pass for this adjustment; a second recovery-email browser run was not required/performed by the agent.
+- Read-only guest API independently confirmed actual published dev profile ID 5, combined genre/instrument/role/place search, ID cursor exclusion, absence of email/user_id/birthdate, and successful image HEAD response. No user's profile was published by the agent; user chose the publish action.
+- Existing environment-isolation rollback test initially assumed the entire directory was empty and failed after the user published. Corrected it to inspect ONLY its own temporary fixture by numeric ID. Both original isolation and new onboarding rollback suites then passed. The failure did not indicate a real profile privacy leak.
+- Final checks: lint, dev build, 5 onboarding tests + 8 environment tests, both SQL rollback suites, guest API/profile/image checks, and npm audit (0 vulnerabilities). Generated database types restored to generator formatting, with only the 42-line new RPC diff.
+- No persistent synthetic test accounts or credential files were created; rejected service-role test command was not executed. Old Supabase cleanup remains unapproved and no user data/files were deleted.
+- Updated docs/AUTH_PROFILE.md and environment documentation. Work remains uncommitted on local dev; no push or hosting deployment. Prod schema/settings/data unchanged during this feature work; migration 20261108190000 is DEV ONLY.

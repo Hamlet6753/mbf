@@ -1,7 +1,8 @@
-﻿import Image from "next/image";
+import { FeaturedMusicians } from "@/components/featured-musicians";
+import { QuickSearch } from "@/components/quick-search";
+import Image from "next/image";
 import Link from "next/link";
-import { MusicianCard, SectionTitle } from "@/components/site";
-import { demoMusicians } from "@/lib/demo-data";
+import { SectionTitle } from "@/components/site";
 
 export default function Home() {
   return (
@@ -34,48 +35,7 @@ export default function Home() {
         </div>
       </section>
       <div className="page-container home-content">
-        <form className="quick-search" action="/musicians">
-          <label>
-            GENRE
-            <select name="genre" defaultValue="">
-              <option value="">All Genres</option>
-              {["Metalcore", "Jazz", "Electronic", "Funk", "Progressive"].map(
-                (x) => (
-                  <option key={x}>{x}</option>
-                ),
-              )}
-            </select>
-          </label>
-          <label>
-            INSTRUMENT
-            <select name="instrument" defaultValue="">
-              <option value="">All Instruments</option>
-              {[
-                "Electric Guitar",
-                "Keyboard",
-                "Bass Guitar",
-                "Vocals",
-                "Drums",
-              ].map((x) => (
-                <option key={x}>{x}</option>
-              ))}
-            </select>
-          </label>
-          <label>
-            LOCATION
-            <input name="query" placeholder="City or country" />
-          </label>
-          <label>
-            AVAILABILITY
-            <select name="available" defaultValue="">
-              <option value="">Any Availability</option>
-              <option value="true">Available for Projects</option>
-            </select>
-          </label>
-          <button className="button primary search-submit" type="submit">
-            Search <span aria-hidden="true">⌕</span>
-          </button>
-        </form>
+        <QuickSearch />
         <div className="value-strip">
           <div>
             <span>01</span>
@@ -102,15 +62,7 @@ export default function Home() {
               View all musicians <span aria-hidden="true">↗</span>
             </Link>
           </div>
-          <p className="demo-notice">
-            Design preview: these are sample profiles, with illustrative photos.
-            They are not real members.
-          </p>
-          <div className="musician-grid featured-grid">
-            {demoMusicians.slice(0, 4).map((m) => (
-              <MusicianCard musician={m} key={m.id} />
-            ))}
-          </div>
+          <FeaturedMusicians />
         </section>
         <section className="section" id="bands">
           <SectionTitle eyebrow="MAKE YOUR NEXT MOVE">
@@ -267,7 +219,8 @@ export default function Home() {
             Explore Musicians <span aria-hidden="true">↗</span>
           </Link>
           <p className="small muted">
-            Profile registration and live open roles are coming next.
+            Create your musician profile today. Live band listings are coming
+            next.
           </p>
         </section>
       </div>
