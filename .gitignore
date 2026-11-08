@@ -6,3 +6,12 @@ dist/
 !.env.example
 *.log
 .DS_Store
+# Environment-specific Next.js build outputs
+.next-dev/
+.next-prod/
+!.env.dev.example
+!.env.prod.example
+# Supabase CLI local state and dumps
+supabase/.temp/
+supabase/.branches/
+supabase/backups/

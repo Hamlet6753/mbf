@@ -1,0 +1,34 @@
+{
+  "name": "mbf",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "node scripts/web.mjs dev dev",
+    "build": "node scripts/web.mjs dev build",
+    "lint": "npm run lint --workspace=apps/web",
+    "env:check:prod": "node scripts/web.mjs prod check",
+    "start:prod": "node scripts/web.mjs prod start",
+    "test:env": "node --test tests/environment.test.mjs",
+    "build:prod": "node scripts/web.mjs prod build",
+    "start:dev": "node scripts/web.mjs dev start",
+    "build:dev": "node scripts/web.mjs dev build",
+    "supabase": "supabase",
+    "env:check:dev": "node scripts/web.mjs dev check",
+    "db:plan:dev": "node scripts/supabase-dev.mjs plan",
+    "db:migrate:dev": "node scripts/supabase-dev.mjs migrate",
+    "db:test:dev": "node scripts/supabase-dev.mjs test",
+    "db:types:dev": "node scripts/supabase-dev.mjs types"
+  },
+  "overrides": {
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "11.0.1"
+    }
+  },
+  "devDependencies": {
+    "supabase": "3.0.0"
+  }
+}

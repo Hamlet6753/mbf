@@ -1,0 +1,11 @@
+{
+  "dev": {
+    "name": "mbf-dev",
+    "projectRef": "gawblqkuodzuerzirsyr",
+    "region": "eu-central-1"
+  },
+  "prod": {
+    "projectRef": "cjzrnyvyhhkqircmehbi",
+    "region": "eu-central-1"
+  }
+}
